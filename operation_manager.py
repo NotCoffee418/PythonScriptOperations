@@ -76,6 +76,7 @@ async def start_listening_async():
             print()  # Empty line before operation outputs
 
             # If the function is asynchronous, run it using the event loop
+            print(f"Running operation: {selected_operation.description}")
             if selected_operation.asyncness:
                 result = await selected_operation.func()
             else:
