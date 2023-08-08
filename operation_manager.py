@@ -52,19 +52,22 @@ async def start_listening_async():
     operation_dict = {index + 1: operation for index,
                       operation in enumerate(list_operations())}
 
+    _print_operations(operation_dict)
     while True:
-        print("\nAvailable operations:")
-        print("0. Exit")
-        for index, operation in operation_dict.items():
-            print(f"{index}. {operation.description}")
-
         try:
-            choice = int(input("\nSelect an operation by number: "))
+            # check for "help" inpit
+            choice_str = input().lower()
+            if choice_str == "help":
+                _print_operations(operation_dict)
+                continue
 
+            # check for "exit" input
+            choice = int(choice_str)
             if choice == 0:
                 print("Exiting...")
                 break
 
+            # Check if the choice is valid
             selected_operation = operation_dict.get(choice)
             if not selected_operation:
                 print(
@@ -80,7 +83,7 @@ async def start_listening_async():
 
             if result is not None:
                 print(result)
-            print()  # Empty line after operation outputs
+            print("\nDone\n")  # Empty line after operation outputs
 
         except ValueError:
             print("Please enter a valid number.")
@@ -92,3 +95,11 @@ def start_listening():
     loop = asyncio.get_event_loop()
     loop.run_until_complete(start_listening_async())
     loop.close()
+
+
+def _print_operations(operation_dict):
+    print("\nAvailable operations:")
+    print("0. Exit")
+    for index, operation in operation_dict.items():
+        print(f"{index}. {operation.description}")
+    print('\nSelect an operation (\'help\' for list of operations)')
