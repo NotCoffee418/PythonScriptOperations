@@ -1,6 +1,6 @@
 import asyncio
 import unittest
-from operation_manager import list_operations, reset_operations, register_operations
+from operation_manager import list_operations, reset_operations, register_operation
 
 
 class TestOperations(unittest.TestCase):
@@ -8,14 +8,14 @@ class TestOperations(unittest.TestCase):
     def test_sync_function(self):
         def sync_func():
             return "sync result"
-        register_operations(sync_func, "Sync function")
+        register_operation(sync_func, "Sync function")
         op = list_operations()[-1]  # Get the last registered operation
         self.assertEqual(op.func(), "sync result")
 
     def test_async_function(self):
         async def async_func():
             return "async result"
-        register_operations(async_func, "Async function")
+        register_operation(async_func, "Async function")
         op = list_operations()[-1]  # Get the last registered operation
         loop = asyncio.get_event_loop()
         result = loop.run_until_complete(op.func())
@@ -34,9 +34,9 @@ class TestOperations(unittest.TestCase):
         def func3():
             pass
 
-        register_operations(func1, "Func 1", 2)
-        register_operations(func2, "Async Func 2", 3)
-        register_operations(func3, "Func 3", 1)
+        register_operation(func1, "Func 1", 2)
+        register_operation(func2, "Async Func 2", 3)
+        register_operation(func3, "Func 3", 1)
 
         ops = list_operations()
         # Highest priority

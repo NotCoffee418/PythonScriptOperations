@@ -46,3 +46,49 @@ def list_operations() -> List[RegisteredOperation]:
         key=lambda op: (op.priority == 0, -op.priority, op.order)
     )
     return sorted_operations
+
+
+async def start_listening_async():
+    operation_dict = {index + 1: operation for index,
+                      operation in enumerate(list_operations())}
+
+    while True:
+        print("\nAvailable operations:")
+        print("0. Exit")
+        for index, operation in operation_dict.items():
+            print(f"{index}. {operation.description}")
+
+        try:
+            choice = int(input("\nSelect an operation by number: "))
+
+            if choice == 0:
+                print("Exiting...")
+                break
+
+            selected_operation = operation_dict.get(choice)
+            if not selected_operation:
+                print(
+                    f"Invalid choice {choice}. Please select a valid operation.")
+                continue
+            print()  # Empty line before operation outputs
+
+            # If the function is asynchronous, run it using the event loop
+            if selected_operation.asyncness:
+                result = await selected_operation.func()
+            else:
+                result = selected_operation.func()
+
+            if result is not None:
+                print(result)
+            print()  # Empty line after operation outputs
+
+        except ValueError:
+            print("Please enter a valid number.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+
+def start_listening():
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(start_listening_async())
+    loop.close()
