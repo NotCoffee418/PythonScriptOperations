@@ -11,7 +11,7 @@ It is the brother to [CSharpScriptOperations](https://github.com/NotCoffee418/CS
 
 1. **Import the pip package**:
     ```python
-    import pythonscriptoperations
+    from pythonscriptoperations import register_operation, start_listening, start_listening_async
     ```
 2. **Create a function or async function and register it**:
     ```python
@@ -49,7 +49,7 @@ Done
 
 ## Detailed Instructions
 
-### 1. Install the pip package.
+### 1. Install the pip package
 
 Install the pip package using:
 ```bash
@@ -57,7 +57,7 @@ pip install pythonscriptoperations
 ```
 Then, simply `import pythonscriptoperations` wherever you need it.
 
-### 2. Define your operations
+### 2. Register your operations
 
 Operations are simple Python functions (or async functions) dedicated to specific tasks.  
 To provide a description, simply pass it when registering the function:
@@ -66,37 +66,28 @@ To provide a description, simply pass it when registering the function:
 def example_function():
     print("This is an example.")
 
+async def example_async_function():
+    print("This will be awaited")
+    await asyncio.sleep(1000)
+
 register_operations(example_function, "An example operation")
+register_operations(example_async_function, "An example async operation")
 ```
 
-### 3. Register your operations
-
-You can register multiple operations at once:
-
-```python
-def operation1():
-    pass
-
-def operation2():
-    pass
-
-register_operations(operation1, "Description for operation1")
-register_operations(operation2, "Description for operation2")
-```
-
-### 4. Start listening
+### 3. Start listening
 
 Start the listener to display available operations and accept user input:
 
 ```python
-start_listening_async()
-```
-For synchronous setups, you can use:
-```python
 start_listening()
 ```
 
-### 5. Try it out
+If you need the console to be non-blocking, you can use the async version:
+```python
+start_listening_async()
+```
+
+### 4. Try it out
 
 When you run your script, you should see a list of operations with numbers next to them. To execute an operation, simply input its number.
 
