@@ -9,7 +9,11 @@ It is the brother to [CSharpScriptOperations](https://github.com/NotCoffee418/CS
 
 ## Quick Start
 
-1. **Create a function or async function and register it**:
+1. **Import the pip package**:
+    ```python
+    import pythonscriptoperations
+    ```
+2. **Create a function or async function and register it**:
     ```python
     def add_numbers():
         result = 2 + 2
@@ -18,7 +22,7 @@ It is the brother to [CSharpScriptOperations](https://github.com/NotCoffee418/CS
     register_operations(add_numbers, "Print the result of 2+2")
     ```
 
-2. **Start listening for operations**:
+3. **Start listening for operations**:
     ```python
     start_listening()
     ```

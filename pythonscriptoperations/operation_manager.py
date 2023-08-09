@@ -85,6 +85,7 @@ async def start_listening_async():
             if result is not None:
                 print(result)
             print("\nDone\n")  # Empty line after operation outputs
+            _request_selection()
 
         except ValueError:
             print("Please enter a valid number.")
@@ -103,4 +104,8 @@ def _print_operations(operation_dict):
     print("0. Exit")
     for index, operation in operation_dict.items():
         print(f"{index}. {operation.description}")
+    _request_selection()
+
+
+def _request_selection():
     print('\nSelect an operation (\'help\' for list of operations)')

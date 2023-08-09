@@ -1,5 +1,6 @@
+# pip install pythonscriptoperations
 import asyncio
-import operation_manager
+from pythonscriptoperations import register_operation, start_listening, start_listening_async
 
 
 def add():
@@ -20,17 +21,19 @@ def divide():
 
 
 # Register the operations
-operation_manager.register_operation(add, "Addition: 5 + 7")
-operation_manager.register_operation(subtract, "Subtraction: 12 - 4")
-operation_manager.register_operation(
+register_operation(add, "Addition: 5 + 7")
+register_operation(subtract, "Subtraction: 12 - 4")
+register_operation(
     multiply_async, "Multiplication (async): 6 * 3")
-operation_manager.register_operation(divide, "Division: 36 / 6")
+register_operation(divide, "Division: 36 / 6")
 
 if __name__ == "__main__":
     print("Welcome to the math demo of our operation manager!")
     try:
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(operation_manager.start_listening_async())
-        # operation_manager.start_listening() # Without async
+        loop.run_until_complete(start_listening_async())
+
+        # or without async
+        # start_listening()
     finally:
         loop.close()
